@@ -10,6 +10,8 @@ if (php_sapi_name() === 'cli-server'
 chdir(dirname(__DIR__));
 require 'vendor/autoload.php';
 
+(new \Dotenv\Dotenv(dirname(__DIR__)))->load();
+
 /** @var \Interop\Container\ContainerInterface $container */
 $container = require 'config/container.php';
 
