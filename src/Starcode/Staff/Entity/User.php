@@ -3,6 +3,7 @@
 namespace Starcode\Staff\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use League\OAuth2\Server\Entities\UserEntityInterface;
 
 /**
  * Class User
@@ -11,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="Starcode\Staff\Repository\UserRepository")
  * @ORM\Table(name="users")
  */
-class User
+class User implements UserEntityInterface
 {
     /**
      * @var int
@@ -128,5 +129,15 @@ class User
     public function setSurname(string $surname)
     {
         $this->surname = $surname;
+    }
+
+    /**
+     * Return the user's identifier.
+     *
+     * @return mixed
+     */
+    public function getIdentifier()
+    {
+        return $this->getId();
     }
 }
