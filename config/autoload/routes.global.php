@@ -9,6 +9,7 @@ return [
         'factories' => [
             App\Action\HomePageAction::class => App\Action\HomePageFactory::class,
             Starcode\Staff\Action\Auth\TokenAction::class => Starcode\Staff\Action\Auth\TokenActionFactory::class,
+            League\OAuth2\Server\Middleware\ResourceServerMiddleware::class => Starcode\Staff\Service\ResourceServerMiddlewareFactory::class,
         ],
     ],
 
