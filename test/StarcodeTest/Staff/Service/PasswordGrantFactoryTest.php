@@ -1,12 +1,12 @@
 <?php
 
-namespace StarcodeTest\Staff\Authorization\Service;
+namespace StarcodeTest\Staff\Service;
 
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use Prophecy\Prophecy\ObjectProphecy;
-use Starcode\Staff\Authorization\Service\PasswordGrantFactory;
+use Starcode\Staff\Service\PasswordGrantFactory;
 use Starcode\Staff\Entity\RefreshToken;
 use Starcode\Staff\Entity\User;
 use Starcode\Staff\Exception\InvalidConfigException;
@@ -88,7 +88,7 @@ class PasswordGrantFactoryTest extends \PHPUnit_Framework_TestCase
     public function testServiceManagerReturnPasswordGrant()
     {
         /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../../config/container.php');
+        $container = require(__DIR__ . '/../../../../config/container.php');
 
         $passwordGrant = $container->get(PasswordGrant::class);
 

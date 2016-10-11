@@ -1,6 +1,6 @@
 <?php
 
-namespace Starcode\Staff\Authorization\Service;
+namespace Starcode\Staff\Service;
 
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;

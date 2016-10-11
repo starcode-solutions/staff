@@ -3,8 +3,8 @@
 return [
     'dependencies' => [
         'factories' => [
-            League\OAuth2\Server\AuthorizationServer::class => Starcode\Staff\Authorization\Service\AuthorizationServerFactory::class,
-            League\OAuth2\Server\Grant\PasswordGrant::class => Starcode\Staff\Authorization\Service\PasswordGrantFactory::class,
+            League\OAuth2\Server\AuthorizationServer::class => Starcode\Staff\Service\AuthorizationServerFactory::class,
+            League\OAuth2\Server\Grant\PasswordGrant::class => Starcode\Staff\Service\PasswordGrantFactory::class,
         ],
     ],
     'authorization' => [

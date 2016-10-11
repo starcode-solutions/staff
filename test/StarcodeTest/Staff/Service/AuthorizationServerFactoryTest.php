@@ -1,13 +1,13 @@
 <?php
 
-namespace StarcodeTest\Staff\Authorization\Service;
+namespace StarcodeTest\Staff\Service;
 
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use Prophecy\Prophecy\ObjectProphecy;
-use Starcode\Staff\Authorization\Service\AuthorizationServerFactory;
+use Starcode\Staff\Service\AuthorizationServerFactory;
 use Starcode\Staff\Entity\AccessToken;
 use Starcode\Staff\Entity\Client;
 use Starcode\Staff\Entity\Scope;
@@ -95,7 +95,7 @@ class AuthorizationServerFactoryTest extends \PHPUnit_Framework_TestCase
     public function testServiceManagerReturnAuthorizationServer()
     {
         /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../../config/container.php');
+        $container = require(__DIR__ . '/../../../../config/container.php');
 
         $authorizationServer = $container->get(AuthorizationServer::class);
 

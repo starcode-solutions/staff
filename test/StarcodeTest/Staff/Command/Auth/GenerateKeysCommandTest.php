@@ -74,8 +74,8 @@ class GenerateKeysCommandTest extends \PHPUnit_Framework_TestCase
 
         $this->shellExecutor->execute(sprintf(
             GenerateKeysCommand::SHELL_GENERATE_PRIVATE_KEY_WITH_PASS_PHRASE,
-            $privateKey,
             $passPhrase,
+            $privateKey,
             $numBits
         ))->shouldBeCalled();
 
