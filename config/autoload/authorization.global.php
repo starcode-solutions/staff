@@ -5,6 +5,7 @@ return [
         'factories' => [
             League\OAuth2\Server\AuthorizationServer::class => Starcode\Staff\Service\AuthorizationServerFactory::class,
             League\OAuth2\Server\Grant\PasswordGrant::class => Starcode\Staff\Service\PasswordGrantFactory::class,
+            League\OAuth2\Server\ResourceServer::class => Starcode\Staff\Service\ResourceServerFactory::class,
         ],
     ],
     'authorization' => [
