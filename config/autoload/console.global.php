@@ -1,19 +1,23 @@
 <?php
 
+use Starcode\Staff\Command;
+
 return [
     'dependencies' => [
         'factories' => [
             Symfony\Component\Console\Application::class => Starcode\Staff\Service\ConsoleApplicationFactory::class,
 
             // commands
-            Starcode\Staff\Command\User\GenerateCommand::class => Starcode\Staff\Command\User\GenerateCommandFactory::class,
+            Command\User\GenerateCommand::class => Command\User\GenerateCommandFactory::class,
+            Command\Client\GenerateCommand::class => Command\Client\GenerateCommandFactory::class,
         ]
     ],
     'console' => [
         'name' => 'Starcode Staff CLI',
         'version' => '1.0.0',
         'commands' => [
-            Starcode\Staff\Command\User\GenerateCommand::class,
+            Command\User\GenerateCommand::class,
+            Command\Client\GenerateCommand::class,
         ],
     ],
 ];

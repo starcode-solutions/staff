@@ -1,10 +1,10 @@
 <?php
 
-namespace Starcode\Staff\Command\User;
+namespace Starcode\Staff\Command\Client;
 
 use Doctrine\ORM\EntityManager;
 use Faker\Factory;
-use Starcode\Staff\Entity\User;
+use Starcode\Staff\Entity\Client;
 use Starcode\Staff\Util\Console\ProgressBarBuilder;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,10 +27,8 @@ class GenerateCommand extends Command
      * @param EntityManager $entityManager
      * @param ProgressBarBuilder $progressBarBuilder
      */
-    public function __construct(
-        EntityManager $entityManager,
-        ProgressBarBuilder $progressBarBuilder
-    ) {
+    public function __construct(EntityManager $entityManager, ProgressBarBuilder $progressBarBuilder)
+    {
         parent::__construct();
         $this->entityManager = $entityManager;
         $this->progressBarBuilder = $progressBarBuilder;
@@ -42,20 +40,20 @@ class GenerateCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('user:generate')
-            ->setDescription('Generate users')
+            ->setName('client:generate')
+            ->setDescription('Generate clients')
             ->addOption(
                 self::OPTION_COUNT,
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'Count of generated Users',
+                'Count of generated Clients',
                 100
             )
             ->addOption(
                 self::OPTION_CLEAR,
                 null,
                 InputOption::VALUE_OPTIONAL,
-                'Clear users table before generate?',
+                'Clear clients table before generate?',
                 true
             );
     }
@@ -69,26 +67,26 @@ class GenerateCommand extends Command
         $clear = $input->getOption(self::OPTION_CLEAR);
 
         if ($clear) {
-            $output->write('Clear users... ');
-            $this->entityManager->getRepository(User::class)->truncate();
+            $output->write('Clear clients... ');
+            $this->entityManager->getRepository(Client::class)->truncate();
             $output->writeln('OK');
         }
 
         $faker = Factory::create();
 
-        $output->writeln('Start generate users');
+        $output->writeln('Start generate clients');
 
         $progress = $this->progressBarBuilder->build($output, $count);
         $progress->start();
 
         for ($i = 0; $i < $count; $i++) {
-            $user = new User();
-            $user->setEmail($faker->email);
-            $user->setPassword(md5($user->getEmail()));
-            $user->setForename($faker->firstName);
-            $user->setSurname($faker->lastName);
+            $client = new Client();
+            $client->setIdentifier($faker->companyEmail);
+            $client->setName($faker->company);
+            $client->setSecret(md5($client->getIdentifier()));
+            $client->setRedirectUri($faker->url);
 
-            $this->entityManager->persist($user);
+            $this->entityManager->persist($client);
             $this->entityManager->flush();
 
             $progress->advance();

@@ -1,13 +1,13 @@
 <?php
 
-namespace StarcodeTest\Staff\Command\User;
+namespace StarcodeTest\Staff\Command\Client;
 
 use Doctrine\ORM\EntityManager;
 use Prophecy\Argument;
 use Prophecy\Prophecy\ObjectProphecy;
-use Starcode\Staff\Command\User\GenerateCommand;
-use Starcode\Staff\Entity\User;
-use Starcode\Staff\Repository\UserRepository;
+use Starcode\Staff\Command\Client\GenerateCommand;
+use Starcode\Staff\Entity\Client;
+use Starcode\Staff\Repository\ClientRepository;
 use Starcode\Staff\Util\Console\ProgressBarBuilder;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\Input;
@@ -60,10 +60,10 @@ class GenerateCommandTest extends \PHPUnit_Framework_TestCase
         $this->input->getOption(GenerateCommand::OPTION_COUNT)->willReturn(0);
         $this->input->getOption(GenerateCommand::OPTION_CLEAR)->willReturn(true);
 
-        $userRepository = $this->prophesize(UserRepository::class);
+        $userRepository = $this->prophesize(ClientRepository::class);
         $userRepository->truncate()->shouldBeCalled();
 
-        $this->entityManager->getRepository(User::class)->willReturn($userRepository->reveal());
+        $this->entityManager->getRepository(Client::class)->willReturn($userRepository->reveal());
 
         $this->invokeExecuteMethod();
     }

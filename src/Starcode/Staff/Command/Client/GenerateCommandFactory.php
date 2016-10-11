@@ -1,6 +1,6 @@
 <?php
 
-namespace Starcode\Staff\Command\User;
+namespace Starcode\Staff\Command\Client;
 
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
@@ -14,7 +14,9 @@ class GenerateCommandFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        $entityManager = $container->get(EntityManager::class);
-        return new GenerateCommand($entityManager, new ProgressBarBuilder());
+        return new GenerateCommand(
+            $container->get(EntityManager::class),
+            new ProgressBarBuilder()
+        );
     }
 }
