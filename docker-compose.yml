@@ -1,6 +1,16 @@
 version: '2'
 services:
 
+  php:
+    image: php:7.1-fpm
+    depends_on:
+      - db
+    ports:
+      - "${PHP_EXTERNAL_PORT}:9000"
+    volumes:
+      - ".:/var/www/html"
+    command: "php -S 0.0.0.0:9000 -t /var/www/html/public /var/www/html/public/index.php"
+
   db:
     image: postgres:9.5
     ports:
