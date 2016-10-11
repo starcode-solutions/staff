@@ -50,6 +50,11 @@ class AccessToken implements AccessTokenEntityInterface
     private $userId;
 
     /**
+     * @var Client
+     */
+    private $client;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -118,7 +123,7 @@ class AccessToken implements AccessTokenEntityInterface
      */
     public function getClient()
     {
-        // TODO: Implement getClient() method.
+        return $this->client;
     }
 
     /**
@@ -192,7 +197,7 @@ class AccessToken implements AccessTokenEntityInterface
      */
     public function setClient(ClientEntityInterface $client)
     {
-        // TODO: Implement setClient() method.
+        $this->client = $client;
     }
 
     /**

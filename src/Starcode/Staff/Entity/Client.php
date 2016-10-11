@@ -26,6 +26,13 @@ class Client implements ClientEntityInterface
     /**
      * @var string
      *
+     * @ORM\Column(name="identifier", type="string", nullable=false, unique=true)
+     */
+    private $identifier;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="name", type="string")
      */
     private $name;
@@ -115,6 +122,14 @@ class Client implements ClientEntityInterface
      */
     public function getIdentifier()
     {
-        return $this->getId();
+        return $this->identifier;
+    }
+
+    /**
+     * @param string $identifier
+     */
+    public function setIdentifier(string $identifier)
+    {
+        $this->identifier = $identifier;
     }
 }

@@ -8,6 +8,7 @@ return [
         ],
         'factories' => [
             App\Action\HomePageAction::class => App\Action\HomePageFactory::class,
+            Starcode\Staff\Action\Auth\TokenAction::class => Starcode\Staff\Action\Auth\TokenActionFactory::class,
         ],
     ],
 
@@ -23,6 +24,12 @@ return [
             'path' => '/api/ping',
             'middleware' => App\Action\PingAction::class,
             'allowed_methods' => ['GET'],
+        ],
+        [
+            'name' => 'auth.token',
+            'path' => '/auth/token',
+            'middleware' => Starcode\Staff\Action\Auth\TokenAction::class,
+            'allowed_methods' => ['POST'],
         ],
     ],
 ];
