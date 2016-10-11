@@ -2,6 +2,7 @@
 
 namespace Starcode\Staff\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
@@ -51,8 +52,25 @@ class AccessToken implements AccessTokenEntityInterface
 
     /**
      * @var Client
+     *
+     * @ORM\ManyToOne(targetEntity="Client")
      */
     private $client;
+
+    /**
+     * @var Scope[]
+     *
+     * @ORM\ManyToMany(targetEntity="Scope")
+     */
+    private $scopes;
+
+    /**
+     * AccessToken constructor.
+     */
+    public function __construct()
+    {
+        $this->scopes = new ArrayCollection();
+    }
 
     /**
      * @return int
@@ -147,7 +165,7 @@ class AccessToken implements AccessTokenEntityInterface
      */
     public function getScopes()
     {
-        // TODO: Implement getScopes() method.
+        return $this->scopes;
     }
 
     /**
@@ -207,6 +225,6 @@ class AccessToken implements AccessTokenEntityInterface
      */
     public function addScope(ScopeEntityInterface $scope)
     {
-        // TODO: Implement addScope() method.
+        $this->scopes->add($scope);
     }
 }

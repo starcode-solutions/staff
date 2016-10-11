@@ -43,6 +43,6 @@ class ScopeRepository extends AbstractRepository implements ScopeRepositoryInter
         ClientEntityInterface $clientEntity,
         $userIdentifier = null
     ) {
-        // TODO: Implement finalizeScopes() method.
+        return $scopes;
     }
 }

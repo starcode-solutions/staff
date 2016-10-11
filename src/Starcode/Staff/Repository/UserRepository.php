@@ -31,6 +31,15 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
         $grantType,
         ClientEntityInterface $clientEntity
     ) {
-        // TODO: Implement getUserEntityByUserCredentials() method.
+        $qb = $this->createQueryBuilder('u');
+        $qb->andWhere('u.email = :username')
+            ->setParameter('username', $username);
+
+        $qb->andWhere('u.password = :password')
+            ->setParameter('password', md5($password));
+
+        $query = $qb->getQuery();
+
+        return $query->getSingleResult();
     }
 }

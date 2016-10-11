@@ -35,8 +35,8 @@ class AuthorizationServerFactory implements FactoryInterface
         $accessTokenRepository = $entityManager->getRepository(AccessToken::class);
         $scopeRepository = $entityManager->getRepository(Scope::class);
 
-        $privateKey = 'file://' . realpath($authorizationConfig['private_key'] ?? 'data/ssl/public.key');
-        $publicKey = 'file://' . realpath($authorizationConfig['public_key'] ?? 'data/ssl/public.key');
+        $privateKey = 'file://' . realpath($authorizationConfig['private_key'] ?? 'data/public.key');
+        $publicKey = 'file://' . realpath($authorizationConfig['public_key'] ?? 'data/public.key');
         $privateKeyPassPhrase = $authorizationConfig['private_key_pass_phrase'] ?? null;
 
         if (!empty($privateKeyPassPhrase)) {

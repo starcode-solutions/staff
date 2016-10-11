@@ -4,6 +4,7 @@ namespace Starcode\Staff\Repository;
 
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
 use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
+use Starcode\Staff\Entity\RefreshToken;
 
 /**
  * RefreshTokenRepository
@@ -14,23 +15,20 @@ use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
 class RefreshTokenRepository extends AbstractRepository implements RefreshTokenRepositoryInterface
 {
     /**
-     * Creates a new refresh token
-     *
-     * @return RefreshTokenEntityInterface
+     * @inheritdoc
      */
     public function getNewRefreshToken()
     {
-        // TODO: Implement getNewRefreshToken() method.
+        return new RefreshToken();
     }
 
     /**
-     * Create a new refresh token_name.
-     *
-     * @param RefreshTokenEntityInterface $refreshTokenEntity
+     * @inheritdoc
      */
     public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity)
     {
-        // TODO: Implement persistNewRefreshToken() method.
+        $this->getEntityManager()->persist($refreshTokenEntity);
+        $this->getEntityManager()->flush();
     }
 
     /**

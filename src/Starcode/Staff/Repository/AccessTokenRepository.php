@@ -6,6 +6,7 @@ use League\OAuth2\Server\Entities\AccessTokenEntityInterface;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use Starcode\Staff\Entity\AccessToken;
 
 /**
  * AccessTokenRepository
@@ -16,27 +17,20 @@ use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 class AccessTokenRepository extends AbstractRepository implements AccessTokenRepositoryInterface
 {
     /**
-     * Create a new access token
-     *
-     * @param ClientEntityInterface $clientEntity
-     * @param ScopeEntityInterface[] $scopes
-     * @param mixed $userIdentifier
-     *
-     * @return AccessTokenEntityInterface
+     * @inheritdoc
      */
     public function getNewToken(ClientEntityInterface $clientEntity, array $scopes, $userIdentifier = null)
     {
-        // TODO: Implement getNewToken() method.
+        return new AccessToken();
     }
 
     /**
-     * Persists a new access token to permanent storage.
-     *
-     * @param AccessTokenEntityInterface $accessTokenEntity
+     * @inheritdoc
      */
     public function persistNewAccessToken(AccessTokenEntityInterface $accessTokenEntity)
     {
-        // TODO: Implement persistNewAccessToken() method.
+        $this->getEntityManager()->persist($accessTokenEntity);
+        $this->getEntityManager()->flush();
     }
 
     /**
