@@ -1,0 +1,86 @@
+swagger: '2.0'
+info:
+  version: 0.0.1
+  title: Starcode Staff
+paths:
+  /auth/info:
+    get:
+      description: |
+        Get authorization info
+      security:
+        - passwordGrant
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/AuthInfo'
+  /user/registration:
+    post:
+      description: |
+        Register new user
+      security:
+        - passwordGrant:
+          - user:registration
+      responses:
+        '200':
+          description: Successful response
+          schema:
+            $ref: '#/definitions/User'
+
+  /client/registration:
+    post:
+      description: |
+        Register new client
+      security:
+        - passwordGrant:
+          - client:
+      responses:
+        '200':
+          description: Sucessful response
+          schema:
+            $ref: '#/definitions/Client'
+
+securityDefinitions:
+  passwordGrant:
+    type: oauth2
+    flow: password
+    tokenUrl: /auth/token
+    scopes:
+      user:registration: Register new user
+      clinet:registration: Register new client
+definitions:
+  User:
+    type: object
+    required:
+      - email
+      - password
+      - forename
+      - surname
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+      forename:
+        type: string
+      surname:
+        type: string
+  Client:
+    type: object
+    required:
+      - name
+      - secret
+    properties:
+      name:
+        type: string
+      secret:
+        type: string
+  AuthInfo:
+    type: object
+    properties:
+      forename:
+        type: string
+      surname:
+        type: string
+      email:
+        type: string
