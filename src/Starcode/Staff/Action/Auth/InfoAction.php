@@ -30,6 +30,7 @@ class InfoAction
             'email' => $user->getEmail(),
             'forename' => $user->getForename(),
             'surname' => $user->getSurname(),
+            'scopes' => $request->getAttribute('oauth_scopes'),
         ]);
     }
 }

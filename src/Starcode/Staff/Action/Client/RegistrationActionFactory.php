@@ -2,6 +2,7 @@
 
 namespace Starcode\Staff\Action\Client;
 
+use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
@@ -12,6 +13,7 @@ class RegistrationActionFactory implements FactoryInterface
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
-        return new RegistrationAction();
+        $entityManager = $container->get(EntityManager::class);
+        return new RegistrationAction($entityManager);
     }
 }
