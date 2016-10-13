@@ -2,6 +2,8 @@
 
 namespace Starcode\Staff\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use League\OAuth2\Server\Repositories\ClientRepositoryInterface;
 
 /**
@@ -28,6 +30,12 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryInt
 
         $query = $qb->getQuery();
 
-        return $query->getSingleResult();
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $noResultException) {
+            return null;
+        } catch (NonUniqueResultException $nonUniqueResultException) {
+            return null;
+        }
     }
 }

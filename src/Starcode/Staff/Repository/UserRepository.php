@@ -2,6 +2,8 @@
 
 namespace Starcode\Staff\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
 use League\OAuth2\Server\Repositories\UserRepositoryInterface;
@@ -40,6 +42,12 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
         $query = $qb->getQuery();
 
-        return $query->getSingleResult();
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $noResultException) {
+            return null;
+        } catch (NonUniqueResultException $nonUniqueResultException) {
+            return null;
+        }
     }
 }

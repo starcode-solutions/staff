@@ -6,6 +6,7 @@ use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Zend\Diactoros\Response\JsonResponse;
 use Zend\Diactoros\Stream;
 
 class TokenAction
@@ -30,9 +31,13 @@ class TokenAction
             return $exception->generateHttpResponse($response);
         } catch (\Exception $exception) {
 
-            $body = new Stream('php://temp', 'r+');
-            $body->write($exception->getMessage());
-            return $response->withStatus(500)->withBody($body);
+            return new JsonResponse([
+                'success' => false,
+                'message' => $exception->getMessage(),
+                'file' => $exception->getFile(),
+                'line' => $exception->getFile(),
+                'trace' => $exception->getTrace(),
+            ], 500);
 
         }
     }
