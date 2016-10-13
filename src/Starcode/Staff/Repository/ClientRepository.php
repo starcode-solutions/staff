@@ -28,6 +28,9 @@ class ClientRepository extends AbstractRepository implements ClientRepositoryInt
                 ->setParameter('secret', md5($clientSecret));
         }
 
+        $qb->andWhere('lower(c.grantTypes) LIKE :grantTypes')
+            ->setParameter('grantTypes', '%' . strtolower($grantType) . '%');
+
         $query = $qb->getQuery();
 
         try {

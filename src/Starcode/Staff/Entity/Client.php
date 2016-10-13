@@ -14,6 +14,18 @@ use League\OAuth2\Server\Entities\ClientEntityInterface;
  */
 class Client implements ClientEntityInterface
 {
+    const GRANT_TYPE_PASSWORD = 'password';
+    const GRANT_TYPE_CLIENT_CREDENTIALS = 'client_credentials';
+    const GRANT_TYPE_AUTHORIZATION_CODE = 'authorization_code';
+    const GRANT_TYPE_REFRESH_TOKEN = 'refresh_token';
+
+    const GRANT_TYPES = [
+        self::GRANT_TYPE_PASSWORD,
+        self::GRANT_TYPE_CLIENT_CREDENTIALS,
+        self::GRANT_TYPE_AUTHORIZATION_CODE,
+        self::GRANT_TYPE_REFRESH_TOKEN,
+    ];
+
     /**
      * @var int
      *
@@ -50,6 +62,13 @@ class Client implements ClientEntityInterface
      * @ORM\Column(name="redirect_uri", type="string", nullable=true)
      */
     private $redirectUri;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="grant_types", type="string", nullable=true)
+     */
+    private $grantTypes;
 
     /**
      * @return int
@@ -131,5 +150,21 @@ class Client implements ClientEntityInterface
     public function setIdentifier(string $identifier)
     {
         $this->identifier = $identifier;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGrantTypes(): array
+    {
+        return $this->grantTypes ? explode(' ', $this->grantTypes) : [];
+    }
+
+    /**
+     * @param array|string $grantTypes
+     */
+    public function setGrantTypes($grantTypes)
+    {
+        $this->grantTypes = is_array($grantTypes) ? implode(' ', $grantTypes) : $grantTypes;
     }
 }

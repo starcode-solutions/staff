@@ -79,12 +79,15 @@ class GenerateCommand extends Command
         $progress = $this->progressBarBuilder->build($output, $count);
         $progress->start();
 
+        $grantTypes = Client::GRANT_TYPES;
+
         for ($i = 0; $i < $count; $i++) {
             $client = new Client();
             $client->setIdentifier($faker->companyEmail);
             $client->setName($faker->company);
             $client->setSecret(md5($client->getIdentifier()));
             $client->setRedirectUri($faker->url);
+            $client->setGrantTypes($grantTypes);
 
             $this->entityManager->persist($client);
             $this->entityManager->flush();
