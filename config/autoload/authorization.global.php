@@ -25,6 +25,7 @@ return [
         'number_bits' => 1024,
 
         'scopes' => [
+            'auth:info' => 'Authorization info',
             'user:registration' => 'Register new user',
             'client:registration' => 'Register new client',
         ],

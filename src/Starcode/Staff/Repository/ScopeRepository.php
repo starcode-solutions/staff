@@ -2,6 +2,8 @@
 
 namespace Starcode\Staff\Repository;
 
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\ScopeEntityInterface;
 use League\OAuth2\Server\Repositories\ScopeRepositoryInterface;
@@ -23,7 +25,19 @@ class ScopeRepository extends AbstractRepository implements ScopeRepositoryInter
      */
     public function getScopeEntityByIdentifier($identifier)
     {
-        // TODO: Implement getScopeEntityByIdentifier() method.
+        $qb = $this->createQueryBuilder('s');
+        $qb->andWhere('s.name = :identifier')
+            ->setParameter('identifier', $identifier);
+
+        $query = $qb->getQuery();
+
+        try {
+            return $query->getSingleResult();
+        } catch (NoResultException $noResultException) {
+            return null;
+        } catch (NonUniqueResultException $nonUniqueResultException) {
+            return null;
+        }
     }
 
     /**
