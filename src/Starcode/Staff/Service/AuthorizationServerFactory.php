@@ -6,7 +6,9 @@ use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\CryptKey;
+use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use League\OAuth2\Server\Grant\PasswordGrant;
+use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use Starcode\Staff\Entity\AccessToken;
 use Starcode\Staff\Entity\Client;
 use Starcode\Staff\Entity\Scope;
@@ -52,6 +54,8 @@ class AuthorizationServerFactory implements FactoryInterface
         );
 
         $passwordGrant = $container->get(PasswordGrant::class);
+        $refreshTokenGrant = $container->get(RefreshTokenGrant::class);
+        $clientCredentialsGrant = $container->get(ClientCredentialsGrant::class);
 
         $accessTokenTTLFormat = $authorizationConfig['access_token_ttl'] ?? 'PT1H';
         try {
@@ -61,6 +65,8 @@ class AuthorizationServerFactory implements FactoryInterface
         }
 
         $authorizationServer->enableGrantType($passwordGrant, $accessTokenTTL);
+        $authorizationServer->enableGrantType($refreshTokenGrant, $accessTokenTTL);
+        $authorizationServer->enableGrantType($clientCredentialsGrant, $accessTokenTTL);
 
         return $authorizationServer;
     }

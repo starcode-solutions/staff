@@ -5,7 +5,9 @@ namespace StarcodeTest\Staff\Service;
 use Doctrine\ORM\EntityManager;
 use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\AuthorizationServer;
+use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use League\OAuth2\Server\Grant\PasswordGrant;
+use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use Prophecy\Prophecy\ObjectProphecy;
 use Starcode\Staff\Service\AuthorizationServerFactory;
 use Starcode\Staff\Entity\AccessToken;
@@ -54,8 +56,12 @@ class AuthorizationServerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->container->get(EntityManager::class)->willReturn($entityManager->reveal());
 
         $passwordGrant = $this->prophesize(PasswordGrant::class);
+        $refreshTokenGrant = $this->prophesize(RefreshTokenGrant::class);
+        $clientCredentialsGrant = $this->prophesize(ClientCredentialsGrant::class);
 
         $this->container->get(PasswordGrant::class)->willReturn($passwordGrant->reveal());
+        $this->container->get(RefreshTokenGrant::class)->willReturn($refreshTokenGrant->reveal());
+        $this->container->get(ClientCredentialsGrant::class)->willReturn($clientCredentialsGrant->reveal());
 
         $this->setExpectedException(InvalidAccessTokenTTLException::class, sprintf(InvalidAccessTokenTTLException::MESSAGE_PATTERN, 'BAD'));
 
@@ -81,8 +87,12 @@ class AuthorizationServerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->container->get(EntityManager::class)->willReturn($entityManager->reveal());
 
         $passwordGrant = $this->prophesize(PasswordGrant::class);
+        $refreshTokenGrant = $this->prophesize(RefreshTokenGrant::class);
+        $clientCredentialsGrant = $this->prophesize(ClientCredentialsGrant::class);
 
         $this->container->get(PasswordGrant::class)->willReturn($passwordGrant->reveal());
+        $this->container->get(RefreshTokenGrant::class)->willReturn($refreshTokenGrant->reveal());
+        $this->container->get(ClientCredentialsGrant::class)->willReturn($clientCredentialsGrant->reveal());
 
         $authorizationServerFactory = new AuthorizationServerFactory();
 
