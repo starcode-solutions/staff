@@ -13,6 +13,7 @@ class AbstractRepository extends EntityRepository
     {
         $userMetadata = $this->getClassMetadata();
         $connection = $this->getEntityManager()->getConnection();
-        $connection->query('TRUNCATE ' . $userMetadata->getTableName());
+
+        $connection->query('DELETE FROM ' . $userMetadata->getTableName());
     }
 }

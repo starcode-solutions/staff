@@ -31,6 +31,13 @@ class Scope implements ScopeEntityInterface
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -63,9 +70,7 @@ class Scope implements ScopeEntityInterface
     }
 
     /**
-     * Get the scope's identifier.
-     *
-     * @return string
+     * @inheritdoc
      */
     public function getIdentifier()
     {
@@ -73,11 +78,23 @@ class Scope implements ScopeEntityInterface
     }
 
     /**
-     * Specify data which should be serialized to JSON
-     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @return mixed data which can be serialized by <b>json_encode</b>,
-     * which is a value of any type other than a resource.
-     * @since 5.4.0
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description)
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @inheritdoc
      */
     public function jsonSerialize()
     {

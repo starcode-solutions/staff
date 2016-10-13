@@ -11,6 +11,7 @@ return [
             Command\User\GenerateCommand::class => Command\User\GenerateCommandFactory::class,
             Command\Client\GenerateCommand::class => Command\Client\GenerateCommandFactory::class,
             Command\Auth\GenerateKeysCommand::class => Command\Auth\GenerateKeysCommandFactory::class,
+            Command\Scope\InitCommand::class => Command\Scope\InitCommandFactory::class,
         ]
     ],
     'console' => [
@@ -20,6 +21,7 @@ return [
             Command\User\GenerateCommand::class,
             Command\Client\GenerateCommand::class,
             Command\Auth\GenerateKeysCommand::class,
+            Command\Scope\InitCommand::class,
         ],
     ],
 ];

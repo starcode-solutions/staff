@@ -23,5 +23,10 @@ return [
         'private_key_pass_phrase' => 'secret',
 
         'number_bits' => 1024,
+
+        'scopes' => [
+            'user:registration' => 'Register new user',
+            'client:registration' => 'Register new client',
+        ],
     ],
 ];
