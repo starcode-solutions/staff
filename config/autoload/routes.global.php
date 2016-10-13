@@ -14,6 +14,7 @@ return [
             Starcode\Staff\Action\Auth\TokenAction::class => Starcode\Staff\Action\Auth\TokenActionFactory::class,
             Starcode\Staff\Action\Auth\InfoAction::class => Starcode\Staff\Action\Auth\InfoActionFactory::class,
             Starcode\Staff\Action\User\RegistrationAction::class => Starcode\Staff\Action\User\RegistrationActionFactory::class,
+            Starcode\Staff\Action\Client\RegistrationAction::class => Starcode\Staff\Action\Client\RegistrationActionFactory::class,
         ],
     ],
 
@@ -54,5 +55,13 @@ return [
             ],
             'allowed_method' => ['POST'],
         ],
+        [
+            'name' => 'client.registration',
+            'path' => '/client/registration',
+            'middleware' => [
+                League\OAuth2\Server\Middleware\ResourceServerMiddleware::class,
+                Starcode\Staff\Action\Client\RegistrationAction::class,
+            ]
+        ]
     ],
 ];

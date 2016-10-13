@@ -3,7 +3,6 @@
 namespace StarcodeTest\Staff\Service;
 
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use Prophecy\Prophecy\ObjectProphecy;
 use Starcode\Staff\Entity\RefreshToken;
@@ -11,21 +10,10 @@ use Starcode\Staff\Exception\InvalidConfigException;
 use Starcode\Staff\Exception\InvalidRefreshTokenTTLException;
 use Starcode\Staff\Repository\RefreshTokenRepository;
 use Starcode\Staff\Service\RefreshTokenGrantFactory;
+use StarcodeTest\Staff\FactoryTestCase;
 
-class RefreshTokenGrantFactoryTest extends \PHPUnit_Framework_TestCase
+class RefreshTokenGrantFactoryTest extends FactoryTestCase
 {
-    /** @var ContainerInterface|ObjectProphecy */
-    private $container;
-
-    /**
-     * @inheritdoc
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->container = $this->prophesize(ContainerInterface::class);
-    }
-
     public function testFactoryFailWhenAuthorizationConfigNotSet()
     {
         $this->setExpectedException(InvalidConfigException::class, 'Authorization config not set');
@@ -82,10 +70,7 @@ class RefreshTokenGrantFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceManagerReturnPasswordGrant()
     {
-        /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../config/container.php');
-
-        $passwordGrant = $container->get(RefreshTokenGrant::class);
+        $passwordGrant = $this->getRealContainer()->get(RefreshTokenGrant::class);
 
         $this->assertInstanceOf(RefreshTokenGrant::class, $passwordGrant);
     }

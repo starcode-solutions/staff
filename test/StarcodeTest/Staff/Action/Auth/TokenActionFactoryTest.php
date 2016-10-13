@@ -2,23 +2,13 @@
 
 namespace StarcodeTest\Staff\Action\Auth;
 
-use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\AuthorizationServer;
-use Prophecy\Prophecy\ObjectProphecy;
 use Starcode\Staff\Action\Auth\TokenAction;
 use Starcode\Staff\Action\Auth\TokenActionFactory;
+use StarcodeTest\Staff\FactoryTestCase;
 
-class TokenActionFactoryTest extends \PHPUnit_Framework_TestCase
+class TokenActionFactoryTest extends FactoryTestCase
 {
-    /** @var ContainerInterface|ObjectProphecy */
-    private $container;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->container = $this->prophesize(ContainerInterface::class);
-    }
-
     public function testFactorySuccessReturnTokenAction()
     {
         $authorizationServer = $this->prophesize(AuthorizationServer::class);
@@ -34,10 +24,7 @@ class TokenActionFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceManagerReturnTokenAction()
     {
-        /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../../config/container.php');
-
-        $tokenAction = $container->get(TokenAction::class);
+        $tokenAction = $this->getRealContainer()->get(TokenAction::class);
 
         $this->assertInstanceOf(TokenAction::class, $tokenAction);
     }

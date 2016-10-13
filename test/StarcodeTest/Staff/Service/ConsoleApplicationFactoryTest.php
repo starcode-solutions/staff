@@ -4,26 +4,14 @@ namespace StarcodeTest\Staff\Service;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
 use Prophecy\Prophecy\ObjectProphecy;
 use Starcode\Staff\Exception\InvalidConfigException;
 use Starcode\Staff\Service\ConsoleApplicationFactory;
+use StarcodeTest\Staff\FactoryTestCase;
 use Symfony\Component\Console\Application;
 
-class ConsoleApplicationFactoryTest extends \PHPUnit_Framework_TestCase
+class ConsoleApplicationFactoryTest extends FactoryTestCase
 {
-    /** @var ContainerInterface|ObjectProphecy */
-    private $container;
-
-    /**
-     * @inheritdoc
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->container = $this->prophesize(ContainerInterface::class);
-    }
-
     public function testFactoryFailWhenConsoleConfigNotSet()
     {
         $this->setExpectedException(InvalidConfigException::class, 'Console config not set');
@@ -59,10 +47,7 @@ class ConsoleApplicationFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceManagerReturnConsoleApplication()
     {
-        /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../config/container.php');
-
-        $consoleApplication = $container->get(Application::class);
+        $consoleApplication = $this->getRealContainer()->get(Application::class);
 
         $this->assertInstanceOf(Application::class, $consoleApplication);
     }

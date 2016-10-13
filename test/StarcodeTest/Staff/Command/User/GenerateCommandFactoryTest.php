@@ -3,22 +3,12 @@
 namespace StarcodeTest\Staff\Command\User;
 
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
-use Prophecy\Prophecy\ObjectProphecy;
 use Starcode\Staff\Command\User\GenerateCommand;
 use Starcode\Staff\Command\User\GenerateCommandFactory;
+use StarcodeTest\Staff\FactoryTestCase;
 
-class GenerateCommandFactoryTest extends \PHPUnit_Framework_TestCase
+class GenerateCommandFactoryTest extends FactoryTestCase
 {
-    /** @var ContainerInterface|ObjectProphecy */
-    private $container;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->container = $this->prophesize(ContainerInterface::class);
-    }
-
     public function testFactorySuccessCreateGenerateCommand()
     {
         $entityManager = $this->prophesize(EntityManager::class);
@@ -34,10 +24,7 @@ class GenerateCommandFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceManagerReturnGenerateCommand()
     {
-        /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../../config/container.php');
-
-        $generateCommand = $container->get(GenerateCommand::class);
+        $generateCommand = $this->getRealContainer()->get(GenerateCommand::class);
 
         $this->assertInstanceOf(GenerateCommand::class, $generateCommand);
     }

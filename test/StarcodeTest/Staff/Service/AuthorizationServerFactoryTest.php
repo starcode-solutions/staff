@@ -3,7 +3,6 @@
 namespace StarcodeTest\Staff\Service;
 
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\AuthorizationServer;
 use League\OAuth2\Server\Grant\ClientCredentialsGrant;
 use League\OAuth2\Server\Grant\PasswordGrant;
@@ -18,18 +17,10 @@ use Starcode\Staff\Exception\InvalidConfigException;
 use Starcode\Staff\Repository\AccessTokenRepository;
 use Starcode\Staff\Repository\ClientRepository;
 use Starcode\Staff\Repository\ScopeRepository;
+use StarcodeTest\Staff\FactoryTestCase;
 
-class AuthorizationServerFactoryTest extends \PHPUnit_Framework_TestCase
+class AuthorizationServerFactoryTest extends FactoryTestCase
 {
-    /** @var ContainerInterface|ObjectProphecy */
-    private $container;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->container = $this->prophesize(ContainerInterface::class);
-    }
-
     public function testFactoryFailWhenAuthorizationConfigNotSet()
     {
         $this->setExpectedException(InvalidConfigException::class, 'Authorization config not set');
@@ -104,10 +95,7 @@ class AuthorizationServerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceManagerReturnAuthorizationServer()
     {
-        /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../config/container.php');
-
-        $authorizationServer = $container->get(AuthorizationServer::class);
+        $authorizationServer = $this->getRealContainer()->get(AuthorizationServer::class);
 
         $this->assertInstanceOf(AuthorizationServer::class, $authorizationServer);
     }

@@ -2,23 +2,13 @@
 
 namespace StarcodeTest\Staff\Service;
 
-use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\Middleware\ResourceServerMiddleware;
 use League\OAuth2\Server\ResourceServer;
-use Prophecy\Prophecy\ObjectProphecy;
 use Starcode\Staff\Service\ResourceServerMiddlewareFactory;
+use StarcodeTest\Staff\FactoryTestCase;
 
-class ResourceServerMiddlewareFactoryTest extends \PHPUnit_Framework_TestCase
+class ResourceServerMiddlewareFactoryTest extends FactoryTestCase
 {
-    /** @var ContainerInterface|ObjectProphecy */
-    private $container;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->container = $this->prophesize(ContainerInterface::class);
-    }
-
     public function testFactorySuccessCreateResourceServerMiddleware()
     {
         $this->container->get(ResourceServer::class)->willReturn(
@@ -34,10 +24,7 @@ class ResourceServerMiddlewareFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceManagerReturnResourceServerMiddleware()
     {
-        /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../config/container.php');
-
-        $resourceServerMiddleware = $container->get(ResourceServerMiddleware::class);
+        $resourceServerMiddleware = $this->getRealContainer()->get(ResourceServerMiddleware::class);
 
         $this->assertInstanceOf(ResourceServerMiddleware::class, $resourceServerMiddleware);
     }

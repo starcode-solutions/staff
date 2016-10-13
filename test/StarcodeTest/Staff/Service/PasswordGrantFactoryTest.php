@@ -3,7 +3,6 @@
 namespace StarcodeTest\Staff\Service;
 
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\Grant\PasswordGrant;
 use Prophecy\Prophecy\ObjectProphecy;
 use Starcode\Staff\Service\PasswordGrantFactory;
@@ -13,21 +12,10 @@ use Starcode\Staff\Exception\InvalidConfigException;
 use Starcode\Staff\Exception\InvalidRefreshTokenTTLException;
 use Starcode\Staff\Repository\RefreshTokenRepository;
 use Starcode\Staff\Repository\UserRepository;
+use StarcodeTest\Staff\FactoryTestCase;
 
-class PasswordGrantFactoryTest extends \PHPUnit_Framework_TestCase
+class PasswordGrantFactoryTest extends FactoryTestCase
 {
-    /** @var ContainerInterface|ObjectProphecy */
-    private $container;
-
-    /**
-     * @inheritdoc
-     */
-    public function setUp()
-    {
-        parent::setUp();
-        $this->container = $this->prophesize(ContainerInterface::class);
-    }
-
     public function testFactoryFailWhenAuthorizationConfigNotSet()
     {
         $this->setExpectedException(InvalidConfigException::class, 'Authorization config not set');
@@ -87,10 +75,7 @@ class PasswordGrantFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceManagerReturnPasswordGrant()
     {
-        /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../config/container.php');
-
-        $passwordGrant = $container->get(PasswordGrant::class);
+        $passwordGrant = $this->getRealContainer()->get(PasswordGrant::class);
 
         $this->assertInstanceOf(PasswordGrant::class, $passwordGrant);
     }

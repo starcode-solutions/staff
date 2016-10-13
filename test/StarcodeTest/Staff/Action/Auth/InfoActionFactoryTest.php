@@ -3,24 +3,15 @@
 namespace StarcodeTest\Staff\Action\Auth;
 
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
 use Prophecy\Prophecy\ObjectProphecy;
 use Starcode\Staff\Action\Auth\InfoAction;
 use Starcode\Staff\Action\Auth\InfoActionFactory;
 use Starcode\Staff\Entity\User;
 use Starcode\Staff\Repository\UserRepository;
+use StarcodeTest\Staff\FactoryTestCase;
 
-class InfoActionFactoryTest extends \PHPUnit_Framework_TestCase
+class InfoActionFactoryTest extends FactoryTestCase
 {
-    /** @var ContainerInterface|ObjectProphecy */
-    private $container;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->container = $this->prophesize(ContainerInterface::class);
-    }
-
     public function testFactorySuccessReturnTokenAction()
     {
         $userRepository = $this->prophesize(UserRepository::class);
@@ -40,10 +31,7 @@ class InfoActionFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceManagerReturnTokenAction()
     {
-        /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../../config/container.php');
-
-        $infoAction = $container->get(InfoAction::class);
+        $infoAction = $this->getRealContainer()->get(InfoAction::class);
 
         $this->assertInstanceOf(InfoAction::class, $infoAction);
     }

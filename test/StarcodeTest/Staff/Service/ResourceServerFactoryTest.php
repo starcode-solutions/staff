@@ -3,25 +3,16 @@
 namespace StarcodeTest\Staff\Service;
 
 use Doctrine\ORM\EntityManager;
-use Interop\Container\ContainerInterface;
 use League\OAuth2\Server\ResourceServer;
 use Prophecy\Prophecy\ObjectProphecy;
 use Starcode\Staff\Entity\AccessToken;
 use Starcode\Staff\Exception\InvalidConfigException;
 use Starcode\Staff\Repository\AccessTokenRepository;
 use Starcode\Staff\Service\ResourceServerFactory;
+use StarcodeTest\Staff\FactoryTestCase;
 
-class ResourceServerFactoryTest extends \PHPUnit_Framework_TestCase
+class ResourceServerFactoryTest extends FactoryTestCase
 {
-    /** @var ContainerInterface|ObjectProphecy */
-    private $container;
-
-    public function setUp()
-    {
-        parent::setUp();
-        $this->container = $this->prophesize(ContainerInterface::class);
-    }
-
     public function testFactoryFailWhenAuthorizationConfigNotSet()
     {
         $this->setExpectedException(InvalidConfigException::class, 'Authorization config not set');
@@ -55,10 +46,7 @@ class ResourceServerFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testServiceManagerReturnResourceServer()
     {
-        /** @var ContainerInterface $container */
-        $container = require(__DIR__ . '/../../../../config/container.php');
-
-        $resourceServer = $container->get(ResourceServer::class);
+        $resourceServer = $this->getRealContainer()->get(ResourceServer::class);
 
         $this->assertInstanceOf(ResourceServer::class, $resourceServer);
     }
