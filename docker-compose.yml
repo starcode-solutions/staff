@@ -19,6 +19,8 @@ services:
       - db
     volumes:
       - ".:/var/www/html"
+    environment:
+      PHP_IDE_CONFIG: ${PHP_IDE_CONFIG}
 
   db:
     image: postgres:9.5

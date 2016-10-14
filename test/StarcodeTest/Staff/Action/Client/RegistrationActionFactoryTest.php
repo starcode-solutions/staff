@@ -2,7 +2,7 @@
 
 namespace StarcodeTest\Staff\Action\Client;
 
-use League\OAuth2\Server\AuthorizationServer;
+use Doctrine\ORM\EntityManager;
 use Starcode\Staff\Action\Client\RegistrationAction;
 use Starcode\Staff\Action\Client\RegistrationActionFactory;
 use StarcodeTest\Staff\FactoryTestCase;
@@ -11,9 +11,9 @@ class RegistrationActionFactoryTest extends FactoryTestCase
 {
     public function testFactorySuccessReturnTokenAction()
     {
-        $authorizationServer = $this->prophesize(AuthorizationServer::class);
+        $entityManager = $this->prophesize(EntityManager::class);
 
-        $this->container->get(AuthorizationServer::class)->willReturn($authorizationServer->reveal());
+        $this->container->get(EntityManager::class)->willReturn($entityManager->reveal());
 
         $registrationActionFactory = new RegistrationActionFactory();
 

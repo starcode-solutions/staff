@@ -11,15 +11,11 @@ class RegistrationActionFactoryTest extends FactoryTestCase
 {
     public function testFactorySuccessReturnTokenAction()
     {
-        $authorizationServer = $this->prophesize(AuthorizationServer::class);
-
-        $this->container->get(AuthorizationServer::class)->willReturn($authorizationServer->reveal());
-
         $registrationActionFactory = new RegistrationActionFactory();
 
-        $tokenAction = $registrationActionFactory($this->container->reveal(), RegistrationAction::class);
+        $registrationAction = $registrationActionFactory($this->container->reveal(), RegistrationAction::class);
 
-        $this->assertInstanceOf(RegistrationAction::class, $tokenAction);
+        $this->assertInstanceOf(RegistrationAction::class, $registrationAction);
     }
 
     public function testServiceManagerReturnTokenAction()
